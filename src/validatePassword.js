@@ -1,19 +1,36 @@
+import { passwordValidationErrors } from "./constants";
+
 export const validatePassword = (password) => {
   if (password.length < 8) {
-    return false;
+    return {
+      success: false,
+      error: passwordValidationErrors.length,
+    };
   }
 
-  if (!/[a-z]/.test(password) & !/[A-Z]/.test(password)) {
-    return false;
+  if (!/[A-Z]/.test(password) || !/[a-z]/.test(password)) {
+    return {
+      success: false,
+      error: passwordValidationErrors.case,
+    };
   }
 
   if (!/[0-9]/.test(password)) {
-    return false;
+    return {
+      success: false,
+      error: passwordValidationErrors.number,
+    };
   }
 
   if (!/[^A-Za-z0-9]/.test(password)) {
-    return false;
+    return {
+      success: false,
+      error: passwordValidationErrors.special,
+    };
   }
 
-  return true;
+  return {
+    success: true,
+    error: null,
+  };
 };
